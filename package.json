@@ -1,0 +1,23 @@
+{
+  "name": "local-net",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cloudrex/lan.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cloudrex/lan.js/issues"
+  },
+  "homepage": "https://github.com/cloudrex/lan.js#readme",
+  "devDependencies": {
+    "@types/node": "^10.12.18"
+  }
+}
