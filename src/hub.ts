@@ -30,9 +30,9 @@ export interface IConnection {
  * null       => Do not continue
  * void       => Continue
  */
-type PacketHandler<T> = (packet: INetPacket<T>, authenticated: boolean) => INetPacket<T> | null | void;
+export type PacketHandler<T> = (packet: INetPacket<T>, authenticated: boolean) => INetPacket<T> | null | void;
 
-type HandlerSource<T> = Array<PacketHandler<T>[]>;
+type HandlerCluster<T> = Array<PacketHandler<T>[]>;
 
 export function requireAuth(packet: INetPacket<any>, authenticated: boolean): void | null {
     if (!authenticated) {
@@ -45,7 +45,7 @@ export default class NetworkHub {
     private readonly pool: Map<IpAddress, IConnection>;
     private readonly server: Server;
     private readonly port: number;
-    private readonly handlers: Map<NetPacketType, HandlerSource<any>>;
+    private readonly handlers: Map<NetPacketType, HandlerCluster<any>>;
 
     public constructor(port: number) {
         this.handlers = new Map();
@@ -56,7 +56,7 @@ export default class NetworkHub {
 
     public handle<T>(type: NetPacketType, ...handlerStack: PacketHandler<T>[]): void {
         if (this.handlers.has(type)) {
-            const handlers: HandlerSource<T> = this.handlers.get(type) as HandlerSource<T>;
+            const handlers: HandlerCluster<T> = this.handlers.get(type) as HandlerCluster<T>;
 
             handlers.push(handlerStack);
         }
@@ -67,7 +67,7 @@ export default class NetworkHub {
 
     public invoke<T>(type: NetPacketType, payload: INetPacket<T>): void {
         if (this.handlers.has(type)) {
-            const source: HandlerSource<T> = this.handlers.get(type) as HandlerSource<T>;
+            const source: HandlerCluster<T> = this.handlers.get(type) as HandlerCluster<T>;
             
             let latestPayload: INetPacket<T> = Object.assign({}, payload);
 
