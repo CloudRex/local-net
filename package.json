@@ -19,6 +19,6 @@
     },
     "homepage": "https://github.com/cloudrex/local-net#readme",
     "devDependencies": {
-        "@types/node": "^10.12.18"
+        "@types/node": "^11.13.2"
     }
 }
